@@ -386,14 +386,10 @@ lib.composeManyExtensions [
             lib.warn "Unknown cryptography version: '${version}'. Please update getCargoHash." lib.fakeHash
           );
           sha256 = getCargoHash super.cryptography.version;
-          isWheel = lib.hasSuffix ".whl" super.cryptography.src;
-          scrypto =
-            if isWheel then
-              (
-                super.cryptography.override { preferWheel = true; }
-              ) else super.cryptography;
+          isWheel = lib.hasSuffix ".whl" super.cryptography.src or false;
         in
-        scrypto.overridePythonAttrs
+        if isWheel then super.cryptography else
+        super.cryptography.overridePythonAttrs
           (
             old: {
               nativeBuildInputs = (old.nativeBuildInputs or [ ])
@@ -1406,7 +1402,9 @@ lib.composeManyExtensions [
           }.${version} or (
             lib.warn "Unknown orjson version: '${version}'. Please update getCargoHash." lib.fakeHash
           );
+          isWheel = lib.hasSuffix ".whl" super.orjson.src or false;
         in
+        if isWheel then super.orjson else
         super.orjson.overridePythonAttrs (old: {
           cargoDeps = pkgs.rustPlatform.fetchCargoTarball {
             inherit (old) src;
@@ -2420,7 +2418,9 @@ lib.composeManyExtensions [
             "0.10" = "0ypdy9sq4211djqh4ni5ap9l7whq9hw0vhsxjfl3a0a4czlldxqp";
           }.${version};
           sha256 = getRepoHash super.watchfiles.version;
+          isWheel = lib.hasSuffix ".whl" super.watchfiles.src or false;
         in
+        if isWheel then super.watchfiles else
         super.watchfiles.overridePythonAttrs (old: rec {
           src = pkgs.fetchFromGitHub {
             owner = "samuelcolvin";

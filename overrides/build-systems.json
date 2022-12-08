@@ -6638,6 +6638,9 @@
   "icalendar": [
     "setuptools"
   ],
+  "icdiff": [
+    "setuptools"
+  ],
   "icecream": [
     "setuptools"
   ],
@@ -10749,6 +10752,9 @@
   "progressbar33": [
     "setuptools"
   ],
+  "projectq": [
+    "pybind11"
+  ],
   "prometheus-client": [
     "setuptools"
   ],
@@ -13056,6 +13062,9 @@
     "setuptools"
   ],
   "pytest-httpx": [
+    "setuptools"
+  ],
+  "pytest-icdiff": [
     "setuptools"
   ],
   "pytest-instafail": [
